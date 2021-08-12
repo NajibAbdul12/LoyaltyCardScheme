@@ -73,7 +73,7 @@ namespace LoyaltyCardScheme2.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            Customer customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -120,7 +120,7 @@ namespace LoyaltyCardScheme2.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            Customer customer = await _context.Customers
                 .SingleOrDefaultAsync(model => model.ID == id);
             if (customer == null)
             {
