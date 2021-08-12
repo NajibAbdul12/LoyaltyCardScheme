@@ -34,7 +34,7 @@ namespace LoyaltyCardScheme2.Controllers
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(model => model.ID == id);
             if (customer == null)
             {
                 return NotFound();
@@ -106,10 +106,6 @@ namespace LoyaltyCardScheme2.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -125,7 +121,7 @@ namespace LoyaltyCardScheme2.Controllers
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(model => model.ID == id);
             if (customer == null)
             {
                 return NotFound();
@@ -139,15 +135,17 @@ namespace LoyaltyCardScheme2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+            Customer customer = await _context.Customers.FindAsync(id);
+            if (customer != null) {
+                _context.Customers.Remove(customer);
+                await _context.SaveChangesAsync(); 
+            }
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.ID == id);
+            return _context.Customers.Any(model => model.ID == id);
         }
     }
 }

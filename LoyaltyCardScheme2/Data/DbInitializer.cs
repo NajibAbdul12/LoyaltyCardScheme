@@ -12,7 +12,7 @@ namespace LoyaltyCardScheme2.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
+            // Look for any customers.
             if (context.Customers.Any())
             {
                 return;   // DB has been seeded
